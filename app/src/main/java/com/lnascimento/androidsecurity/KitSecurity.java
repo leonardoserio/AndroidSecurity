@@ -66,7 +66,7 @@ public class KitSecurity {
         return keyStore;
     }
 
-    public static void decrypt(String chave){
+    public static String decrypt(String chave){
         KeyStore keyStore = loadKeyStore();
         if(keyStore!=null) {
             try {
@@ -77,15 +77,17 @@ public class KitSecurity {
                 String decoded = new String(cipher.doFinal(bytes));
 
                 Log.d("Decrypt Successful", decoded);
+                return decoded;
             } catch (KeyStoreException | NoSuchAlgorithmException | UnrecoverableKeyException | NoSuchPaddingException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException e) {
                 Log.e("Decrypt Error", Objects.requireNonNull(e.getMessage()));
             }
-        }
 
+        }
+        return null;
 
     }
 
-    public static void encrypt(String value) throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, BadPaddingException, IllegalBlockSizeException {
+    public static String encrypt(String value) throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, BadPaddingException, IllegalBlockSizeException {
         generateKeyStore();
         KeyStore keyStore
                 = KeyStore.getInstance("AndroidKeyStore");
@@ -115,6 +117,8 @@ public class KitSecurity {
         byte[] bytes = cipher.doFinal(value.getBytes());
         String encoded = Base64.encodeToString(bytes, Base64.NO_WRAP);
         Log.d("Encrypt Successful",encoded);
+
+        return encoded;
 
     }
 }

@@ -2,6 +2,7 @@ package com.lnascimento.androidsecurity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
@@ -9,6 +10,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -35,6 +37,7 @@ import javax.crypto.IllegalBlockSizeException;
 public class MainActivity extends AppCompatActivity {
     String chave = null;
     Button btnEncrypt, btnDecrypt;
+    SharedPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,12 +46,14 @@ public class MainActivity extends AppCompatActivity {
         btnEncrypt = findViewById(R.id.btn_encrypt);
         btnDecrypt = findViewById(R.id.btn_decrypt);
         btnDecrypt.setEnabled(false);
+        preferences = getSharedPreferences("user_preferences",MODE_PRIVATE);
 
         btnEncrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    KitSecurity.encrypt("Leonardo");
+                    String valueEncrypted = KitSecurity.encrypt("Leonardo");
+                    saveDataEncrypted(preferences,valueEncrypted);
                     btnDecrypt.setEnabled(true);
                 } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException | IOException | BadPaddingException | IllegalBlockSizeException e) {
                     Log.e("btnEncrypt Error", Objects.requireNonNull(e.getMessage()));
@@ -58,9 +63,24 @@ public class MainActivity extends AppCompatActivity {
         btnDecrypt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KitSecurity.decrypt("asdf");
+
+                String valueDecrypted = KitSecurity.decrypt(getValueSharedPrefence(preferences, "valueEncrypted"));
+                if(valueDecrypted!=null){
+                    Toast.makeText(MainActivity.this,valueDecrypted , Toast.LENGTH_LONG).show();
+                }
             }
         });
+    }
+    private String getValueSharedPrefence(SharedPreferences preferences, String key){
+        return preferences.getString(key,"");
+    }
+
+    private void saveDataEncrypted( SharedPreferences preferences, String data){
+
+        SharedPreferences.Editor editor= preferences.edit();
+        editor.putString("valueEncrypted",data);
+        editor.apply();
+
     }
 
 }
