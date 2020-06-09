@@ -30,7 +30,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.OAEPParameterSpec;
 import javax.crypto.spec.PSource;
 
-public class KitSecurity {
+ class KitSecurity {
     private static void generateKeyStore() {
         loadKeyStore();
 

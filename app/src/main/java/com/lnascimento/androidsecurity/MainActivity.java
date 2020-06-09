@@ -1,14 +1,9 @@
 package com.lnascimento.androidsecurity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.security.keystore.KeyGenParameterSpec;
-import android.security.keystore.KeyProperties;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,22 +11,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.KeyFactory;
-import java.security.KeyPairGenerator;
-import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.MGF1ParameterSpec;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.Objects;
 
 import javax.crypto.BadPaddingException;
@@ -61,21 +46,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    tvEncrypt.setText("Resultado");
-                    tvDecrypt.setText("Resultado");
+                    tvEncrypt.setText(R.string.result_label);
+                    tvDecrypt.setText(R.string.result_label);
                     btnDecrypt.setEnabled(false);
                     tvDecrypt.setVisibility(View.GONE);
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
 
@@ -94,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                         btnDecrypt.setEnabled(true);
                         tvDecrypt.setVisibility(View.VISIBLE);
                     }else{
-                        Toast.makeText(MainActivity.this, "Input empty", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, R.string.input_empty, Toast.LENGTH_SHORT).show();
                     }
                 } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException | IOException | BadPaddingException | IllegalBlockSizeException e) {
                     Log.e("btnEncrypt Error", Objects.requireNonNull(e.getMessage()));
@@ -105,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String valueDecrypted = KitSecurity.decrypt(getValueSharedPrefence(preferences, "valueEncrypted"));
+                String valueDecrypted = KitSecurity.decrypt(getValueSharedPrefence(preferences));
                 if(valueDecrypted!=null){
                     tvDecrypt.setText(valueDecrypted);
 
@@ -113,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    private String getValueSharedPrefence(SharedPreferences preferences, String key){
-        return preferences.getString(key,"");
+    private String getValueSharedPrefence(SharedPreferences preferences){
+        return preferences.getString("valueEncrypted","");
     }
 
     private void saveDataEncrypted( SharedPreferences preferences, String data){

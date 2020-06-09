@@ -11,7 +11,7 @@
         android:layout_width="220dp"
         android:layout_height="45dp"
         android:layout_marginTop="20dp"
-        android:text="Encrypt"
+        android:text="@string/encrypt_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.146"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +23,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="16dp"
-        android:text="Decrypt"
+        android:text="@string/decrypt_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvEncrypt" />
 
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="24dp"
-        android:text="Resultado"
+        android:text="@string/result_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_encrypt" />
 
@@ -55,7 +55,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="32dp"
-        android:text="Resultado"
+        android:text="@string/result_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_decrypt" />
 

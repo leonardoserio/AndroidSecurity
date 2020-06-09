@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">AndroidSecurity</string>
+    <string name="result_label">Result</string>
+    <string name="placeholder_label">Type a text</string>
+    <string name="decrypt_label">Decrypt</string>
+    <string name="encrypt_label">Encrypt</string>
+    <string name="input_empty">Input empty!</string>
+
 </resources>
