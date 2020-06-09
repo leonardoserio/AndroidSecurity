@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnEncrypt = findViewById(R.id.btn_encrypt);
         btnDecrypt = findViewById(R.id.btn_decrypt);
+        btnDecrypt.setEnabled(false);
         try {
             generateKeyStore();
         } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException | IOException | NoSuchProviderException e) {
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     encrypt("Leonardo");
+                    btnDecrypt.setEnabled(true);
                 } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException | IOException | BadPaddingException | IllegalBlockSizeException e) {
                     Log.e("btnEncrypt Error", Objects.requireNonNull(e.getMessage()));
                 }
