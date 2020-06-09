@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         btnDecrypt.setEnabled(false);
         try {
             generateKeyStore();
-        } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException | IOException | NoSuchProviderException e) {
+        } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
             e.printStackTrace();
         }
 
@@ -70,10 +70,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    private void generateKeyStore() throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, NoSuchProviderException {
-        KeyStore keyStore
-                = KeyStore.getInstance("AndroidKeyStore");
-        keyStore.load(null);
+    private void generateKeyStore() throws NoSuchAlgorithmException, NoSuchProviderException {
+        loadKeyStore();
 
         KeyPairGenerator keyGenerator = KeyPairGenerator.getInstance(
                 KeyProperties.KEY_ALGORITHM_RSA, "AndroidKeyStore");
